@@ -1,2 +1,27 @@
 ---
-# tasks file for netbox-web
+
+- name: ensure packages are installed
+  apt:
+    update_cache: yes
+    name: "{{item}}"
+  with_items:
+    - postgresql
+    - libpq-dev
+    - python3-psycopg2
+
+
+- name: ensure database exists
+  postgresql_db:
+    name: netbox
+  become_user: postgres
+
+- name: ensure database user exists
+  postgresql_user:
+    db: netbox
+    name: netbox
+    password: netbox
+    encrypted: yes
+    priv: ALL
+  become_user: postgres
+
+
