@@ -12,14 +12,14 @@
 
 - name: ensure database exists
   postgresql_db:
-    name: netbox
+    name: "{{ netbox_database_name }}"
   become_user: postgres
 
 - name: ensure database user exists
   postgresql_user:
-    db: netbox
-    name: netbox
-    password: netbox
+    db: "{{ netbox_database_name }}"
+    name: "{{ netbox_database_user }}"
+    password: "{{ netbox_database_password }}"
     encrypted: yes
     priv: ALL
   become_user: postgres
